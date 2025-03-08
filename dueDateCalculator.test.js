@@ -93,5 +93,27 @@ describe("calculateDueDate", () => {
     expect(dueDate).toBe(null);
   });
 
-  test("time is tracked only over working hours", () => {});
+  test("valid input returns correct same day due date", () => {
+    const submitDate = new Date("March 10, 2025 09:05:36");
+    const turnaround = 6;
+    const dueDate = calculateDueDate(submitDate, turnaround);
+
+    expect(dueDate).toBe(new Date("March 10, 2025, 15:05:36"));
+  });
+
+  test("valid input returns correct next day due date", () => {
+    const submitDate = new Date("March 10, 2025 12:05:36");
+    const turnaround = 9;
+    const dueDate = calculateDueDate(submitDate, turnaround);
+
+    expect(dueDate).toBe(new Date("March 11, 2025, 13:05:36"));
+  });
+
+  test("valid input returns correct due date, skipping weekends", () => {
+    const submitDate = new Date("March 7, 2025 12:05:36");
+    const turnaround = 10;
+    const dueDate = calculateDueDate(submitDate, turnaround);
+
+    expect(dueDate).toBe(new Date("March 10, 2025, 14:05:36"));
+  });
 });

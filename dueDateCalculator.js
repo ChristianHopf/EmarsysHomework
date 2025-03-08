@@ -37,8 +37,8 @@ function isValidDate(date) {
     return submitDate.getMinutes() == 0 && submitDate.getSeconds() == 0;
   }
 
-  // Date object days are 0 (Sunday) through 6 (Saturday)
-  return day > 0 && day < 6;
+  // Date object days are 0 (Sunday) through 6 (Saturday), so 1 <= day <= 5
+  return 1 <= day && day <= 5;
 }
 
 function calculateDueDate(submitDate, turnaround) {
