@@ -19,14 +19,19 @@
 // interface DateTime{
 
 // }
+
+function isValidDate(date) {
+  // submitDate must be
+  // - between 9AM and 5PM
+  // - between Mon and Fri
+}
+
 function calculateDueDate(submitDate, turnaround) {
-    // Input validation, use a helper function
-
-    // Perform due date calculation
-    // - Divide turnaround by 8 to get number of working days to add
-    // - Add remainder
-
-    // Return due date
+  // Input validation, use a helper function
+  // Perform due date calculation
+  // - Divide turnaround by 8 to get number of working days to add
+  // - Add remainder
+  // Return due date
 }
 
 module.exports = calculateDueDate;
