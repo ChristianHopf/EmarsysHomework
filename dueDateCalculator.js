@@ -24,11 +24,15 @@ function isValidDate(date) {
   // submitDate must be
   // - between 9AM and 5PM
   // - between Mon and Fri
-  let submitDate = Date.parse(date);
-  let hour = submitdate.getHours();
+  let submitDate = new Date(date);
+  let hour = submitDate.getHours();
 
   if (hour < 9 || hour > 17) {
     return false;
+  }
+  // If hour is 5 PM, time must be exactly 5 PM
+  else if (hour == 17) {
+    return submitDate.getMinutes() == 0 && submitDate.getSeconds() == 0;
   }
   return true;
 }
@@ -41,4 +45,4 @@ function calculateDueDate(submitDate, turnaround) {
   // Return due date
 }
 
-(module.exports = calculateDueDate), isValidDate;
+module.exports = { calculateDueDate, isValidDate };
