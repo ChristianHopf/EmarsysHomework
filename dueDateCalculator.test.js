@@ -75,8 +75,19 @@ describe("isValidDate", () => {
 
 describe("calculateDueDate", () => {
   test("invalid submit date returns null", () => {
-    const submitDate = new Date("March 8, 2025 12:05:36");
+    const invalidTime = new Date("March 10, 2025 04:05:36");
+    const invalidDay = new Date("March 8, 2025 12:05:36");
     const turnaround = 32;
+    const dueDate1 = calculateDueDate(invalidTime, turnaround);
+    const dueDate2 = calculateDueDate(invalidDay, turnaround);
+
+    expect(dueDate1).toBe(null);
+    expect(dueDate2).toBe(null);
+  });
+
+  test("invalid turnaround returns null", () => {
+    const submitDate = new Date("March 10, 2025 12:05:36");
+    const turnaround = -5;
     const dueDate = calculateDueDate(submitDate, turnaround);
 
     expect(dueDate).toBe(null);

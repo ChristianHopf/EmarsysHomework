@@ -43,7 +43,7 @@ function isValidDate(date) {
 
 function calculateDueDate(submitDate, turnaround) {
   // Input validation, use a helper function
-  if (!isValidDate(submitDate)) {
+  if (!isValidDate(submitDate) || turnaround <= 0) {
     return null;
   }
   // Perform due date calculation
