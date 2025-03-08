@@ -74,7 +74,13 @@ describe("isValidDate", () => {
 });
 
 describe("calculateDueDate", () => {
-  test("invalid submit date throws error", () => {});
+  test("invalid submit date returns null", () => {
+    const submitDate = new Date("March 8, 2025 12:05:36");
+    const turnaround = 32;
+    const dueDate = calculateDueDate(submitDate, turnaround);
+
+    expect(dueDate).toBe(null);
+  });
 
   test("time is tracked only over working hours", () => {});
 });

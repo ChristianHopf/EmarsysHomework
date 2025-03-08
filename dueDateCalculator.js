@@ -1,6 +1,6 @@
 /**
  * Usage:
- * calculateDueDate(submitDate, turnaround) -> Date
+ * calculateDueDate(submitDate, turnaround) -> Date | null
  * Input:
  *  - submitDate: Date and time the issue is submitted. Assume input is in unix time (ms),
  *      since a real ticket submission would likely use Date.now() or equivalent
@@ -43,6 +43,9 @@ function isValidDate(date) {
 
 function calculateDueDate(submitDate, turnaround) {
   // Input validation, use a helper function
+  if (!isValidDate(submitDate)) {
+    return null;
+  }
   // Perform due date calculation
   // - Divide turnaround by 8 to get number of working days to add
   // - Add remainder
