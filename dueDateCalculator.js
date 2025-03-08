@@ -46,9 +46,17 @@ function calculateDueDate(submitDate, turnaround) {
   if (!isValidDate(submitDate) || turnaround <= 0) {
     return null;
   }
+
   // Perform due date calculation
   // - Divide turnaround by 8 to get number of working days to add
   // - Add remainder
+  let elapsedDays = turnaround / 8;
+  let remainingHours = turnaround % 8;
+
+  let day = new Date(submitDate).getDay();
+  let dueDay = ((day - 1 + elapsedDays) % 5) + 1;
+  // Based on given time and turnaround, add another day if it passes 5 PM
+
   // Return due date
 }
 
