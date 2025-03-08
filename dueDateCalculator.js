@@ -2,7 +2,7 @@
  * Usage:
  * calculateDueDate(submitDate, turnaround) -> Date
  * Input:
- *  - submitDate: Date and time the issue is submitted
+ *  - submitDate: Date and time the issue is submitted, in unix time (ms)
  *  - turnaround: Lifetime of the issue, in hours
  * Output (Date):
  *  - Due date and time for the issue
@@ -24,6 +24,13 @@ function isValidDate(date) {
   // submitDate must be
   // - between 9AM and 5PM
   // - between Mon and Fri
+  let submitDate = Date.parse(date);
+  let hour = submitdate.getHours();
+
+  if (hour < 9 || hour > 17) {
+    return false;
+  }
+  return true;
 }
 
 function calculateDueDate(submitDate, turnaround) {
@@ -34,4 +41,4 @@ function calculateDueDate(submitDate, turnaround) {
   // Return due date
 }
 
-module.exports = calculateDueDate, isValidDate;
+(module.exports = calculateDueDate), isValidDate;
