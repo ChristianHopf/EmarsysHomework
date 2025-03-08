@@ -34,4 +34,4 @@ function calculateDueDate(submitDate, turnaround) {
   // Return due date
 }
 
-module.exports = calculateDueDate;
+module.exports = calculateDueDate, isValidDate;

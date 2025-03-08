@@ -1,4 +1,4 @@
-const calculateDueDate = require("./dueDateCalculator");
+const { isValiddate, calculateDueDate } = require("./dueDateCalculator");
 
 /**
  * Test cases:
