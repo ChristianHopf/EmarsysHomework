@@ -2,7 +2,8 @@
  * Usage:
  * calculateDueDate(submitDate, turnaround) -> Date
  * Input:
- *  - submitDate: Date and time the issue is submitted, in unix time (ms)
+ *  - submitDate: Date and time the issue is submitted. Assume input is in unix time (ms),
+ *      since a real ticket submission would likely use Date.now() or equivalent
  *  - turnaround: Lifetime of the issue, in hours
  * Output (Date):
  *  - Due date and time for the issue
@@ -26,6 +27,7 @@ function isValidDate(date) {
   // - between Mon and Fri
   let submitDate = new Date(date);
   let hour = submitDate.getHours();
+  let day = submitDate.getDay();
 
   if (hour < 9 || hour > 17) {
     return false;
@@ -34,7 +36,9 @@ function isValidDate(date) {
   else if (hour == 17) {
     return submitDate.getMinutes() == 0 && submitDate.getSeconds() == 0;
   }
-  return true;
+
+  // Date object days are 0 (Sunday) through 6 (Saturday)
+  return day > 0 && day < 6;
 }
 
 function calculateDueDate(submitDate, turnaround) {
