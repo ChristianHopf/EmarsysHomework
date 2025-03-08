@@ -14,8 +14,19 @@
  *  - Output:
  *      - dueDate: March 12, 2025, 2:48 PM
  */
-function calculateDueDate() {
-  console.log("calculate");
+
+// Might add TypeScript later
+// interface DateTime{
+
+// }
+function calculateDueDate(submitDate, turnaround) {
+    // Input validation, use a helper function
+
+    // Perform due date calculation
+    // - Divide turnaround by 8 to get number of working days to add
+    // - Add remainder
+
+    // Return due date
 }
 
 module.exports = calculateDueDate;
