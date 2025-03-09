@@ -1,26 +1,3 @@
-/**
- * Usage:
- * calculateDueDate(submitDate, turnaround) -> Date | null
- * Input:
- *  - submitDate: Date and time the issue is submitted. Assume input is in unix time (ms),
- *      since a real ticket submission would likely use Date.now() or equivalent
- *  - turnaround: Lifetime of the issue, in hours
- * Output (Date):
- *  - Due date and time for the issue
- * Example:
- * - calculateDueDate(Date("03-08-2025", 1148), 19)
- *  - Input:
- *      - submitDate: March 10, 2025, 11:48 AM
- *      - turnaround: 19 hours
- *  - Output:
- *      - dueDate: March 12, 2025, 2:48 PM
- */
-
-// Might add TypeScript later
-// interface DateTime{
-
-// }
-
 function isValidDate(date) {
   // submitDate must be
   // - between 9AM and 5PM
@@ -90,6 +67,20 @@ function moveByDays(submitDate, elapsedDays) {
   return submitDate;
 }
 
+/**
+ * Usage:
+ * calculateDueDate(submitDate, turnaround) -> Date | null
+ * Input:
+ *  - submitDate: Date and time the issue is submitted. Assume input is a unix timestamp,
+ *      since a real ticket submission would likely use Date.now() or equivalent
+ *  - turnaround: Lifetime of the issue, in hours
+ * Output (Date):
+ *  - Due date and time for the issue as a Date object
+ * Example:
+ * - calculateDueDate(1741367136000, 19)
+ * - calculateDueDate(Date.parse("March 10, 2025 12:05:36"), 19)
+ *  => Date("March 12, 2025 15:05:36")
+ */
 function calculateDueDate(submitDate, turnaround) {
   // Input validation, use a helper function
   if (!isValidDate(submitDate) || turnaround <= 0) {

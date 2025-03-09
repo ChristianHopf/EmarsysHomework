@@ -81,6 +81,12 @@ describe("isValidDate", () => {
   });
 });
 
+/**
+ * moveByRemainingHours
+ * - move hours within same day
+ * - move hours to next day
+ * - move hours across weekend
+ */
 describe("moveByRemainingHours", () => {
   test("date moves forward within the same day", () => {
     // March 7, 2025 12:05:36
@@ -107,13 +113,19 @@ describe("moveByRemainingHours", () => {
   });
 });
 
+/**
+ * moveByDays
+ * - move days within same week
+ * - move days across weekend
+ * - move days across multiple weeks
+ */
 describe("moveByDays", () => {
-  //   test("date moves forward within the same week", () => {
-  //     // March 10, 2025 12:05:36
-  //     const result = moveByDays(Date.parse("March 10, 2025 12:05:36"), 2);
+  test("date moves forward within the same week", () => {
+    // March 10, 2025 12:05:36
+    const result = moveByDays(Date.parse("March 10, 2025 12:05:36"), 2);
 
-  //     expect(result).toBe(Date.parse("March 12, 2025 12:05:36"));
-  //   });
+    expect(result).toBe(Date.parse("March 12, 2025 12:05:36"));
+  });
 
   test("date moves forward across the weekend", () => {
     // March 14, 2025 12:05:36
@@ -140,54 +152,54 @@ describe("moveByDays", () => {
  *  - due date in same week
  *  - due date after at least one weekend
  */
-// describe("calculateDueDate", () => {
-//   test("invalid submit date returns null", () => {
-//     const invalidTime = new Date("March 10, 2025 04:05:36");
-//     const invalidDay = new Date("March 8, 2025 12:05:36");
-//     const turnaround = 32;
-//     const dueDate1 = calculateDueDate(invalidTime, turnaround);
-//     const dueDate2 = calculateDueDate(invalidDay, turnaround);
+describe("calculateDueDate", () => {
+  test("invalid submit date returns null", () => {
+    const invalidTime = new Date("March 10, 2025 04:05:36");
+    const invalidDay = new Date("March 8, 2025 12:05:36");
+    const turnaround = 32;
+    const dueDate1 = calculateDueDate(invalidTime, turnaround);
+    const dueDate2 = calculateDueDate(invalidDay, turnaround);
 
-//     expect(dueDate1).toBe(null);
-//     expect(dueDate2).toBe(null);
-//   });
+    expect(dueDate1).toBe(null);
+    expect(dueDate2).toBe(null);
+  });
 
-//   test("invalid turnaround returns null", () => {
-//     const submitDate = new Date("March 10, 2025 12:05:36");
-//     const turnaround = -5;
-//     const dueDate = calculateDueDate(submitDate, turnaround);
+  test("invalid turnaround returns null", () => {
+    const submitDate = new Date("March 10, 2025 12:05:36");
+    const turnaround = -5;
+    const dueDate = calculateDueDate(submitDate, turnaround);
 
-//     expect(dueDate).toBe(null);
-//   });
+    expect(dueDate).toBe(null);
+  });
 
-//   test("date correctly moves forward by remainder hours", () => {
-//     // March 10, 2025 15:05:36
-//     const dueDate1 = calculateDueDate(1741633536000, 7);
-//     // March 7, 2025 12:05:36
-//     const dueDate2 = calculateDueDate(1741367136000, 7);
+  test("date correctly moves forward by remainder hours", () => {
+    // March 10, 2025 15:05:36
+    const dueDate1 = calculateDueDate(1741633536000, 7);
+    // March 7, 2025 12:05:36
+    const dueDate2 = calculateDueDate(1741367136000, 7);
 
-//     expect(dueDate1).toStrictEqual(new Date("March 11, 2025 14:05:36"));
-//     expect(dueDate2).toStrictEqual(new Date("March 10, 2025 12:05:36")); // DST
-//   });
+    expect(dueDate1).toStrictEqual(new Date("March 11, 2025 14:05:36"));
+    expect(dueDate2).toStrictEqual(new Date("March 10, 2025 12:05:36")); // DST
+  });
 
-//   test("valid input returns correct same day due date", () => {
-//     // March 17, 2025 09:05:36
-//     const dueDate = calculateDueDate(1742216736000, 7);
+  test("valid input returns correct same day due date", () => {
+    // March 17, 2025 09:05:36
+    const dueDate = calculateDueDate(1742216736000, 7);
 
-//     expect(dueDate).toStrictEqual(new Date("March 17, 2025, 16:05:36"));
-//   });
+    expect(dueDate).toStrictEqual(new Date("March 17, 2025, 16:05:36"));
+  });
 
-//   test("valid input returns correct due date in the same week", () => {
-//     // March 17, 2025 09:05:36
-//     const dueDate = calculateDueDate(1742216736000, 17);
+  test("valid input returns correct due date in the same week", () => {
+    // March 17, 2025 09:05:36
+    const dueDate = calculateDueDate(1742216736000, 17);
 
-//     expect(dueDate).toStrictEqual(new Date("March 19, 2025, 10:05:36"));
-//   });
+    expect(dueDate).toStrictEqual(new Date("March 19, 2025, 10:05:36"));
+  });
 
-//   test("valid input returns correct due date, more than one week", () => {
-//     // March 17, 2025 09:05:36
-//     const dueDate = calculateDueDate(1742216736000, 60);
+  test("valid input returns correct due date, more than one week", () => {
+    // March 17, 2025 09:05:36
+    const dueDate = calculateDueDate(1742216736000, 60);
 
-//     expect(dueDate).toStrictEqual(new Date("March 26, 2025, 13:05:36"));
-//   });
-// });
+    expect(dueDate).toStrictEqual(new Date("March 26, 2025, 13:05:36"));
+  });
+});
