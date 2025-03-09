@@ -42,13 +42,15 @@ function isValidDate(date) {
 }
 
 function moveByRemainingHours(submitDate, remainingHours) {
-  let hour = new Date(submitDate).getHours();
+  let submitDateObj = new Date(submitDate);
+  let hour = submitDateObj.getHours();
+  let day = submitDateObj.getDay();
 
   if (hour + remainingHours > 17) {
     // Move to 5 PM
     submitDate += (17 - hour) * 3600000;
     // Check if Friday, move to Monday, keep minutes and seconds
-    if (submitDateObj.getDay() == 5) {
+    if (day == 5) {
       // From 5 PM Friday to 9 AM Monday = 64 hours
       submitDate += 64 * 3600000;
     }
@@ -63,6 +65,20 @@ function moveByRemainingHours(submitDate, remainingHours) {
     submitDate += remainingHours * 3600000;
   }
 
+  return submitDate;
+}
+
+function moveByDays(submitDate, elapsedDays) {
+  while (elapsedDays >= 5) {
+    // For every 5 days we want to add, add 7
+    submitDate += 7 * 86400000;
+    elapsedDays -= 5;
+  }
+
+  // Add remaining elapsed days
+  if (elapsedDays > 0) {
+    submitDate += elapsedDays * 86400000;
+  }
   return submitDate;
 }
 
@@ -82,16 +98,7 @@ function calculateDueDate(submitDate, turnaround) {
   submitDate = moveByRemainingHours(submitDate, remainingHours);
 
   // Add elapsed weeks
-  while (elapsedDays >= 5) {
-    // For every 5 days we want to add, add 7
-    submitDate += 7 * 86400000;
-    elapsedDays -= 5;
-  }
-
-  // Add remaining elapsed days
-  if (elapsedDays > 0) {
-    submitDate += elapsedDays * 86400000;
-  }
+  submitDate = moveByDays(submitDate, elapsedDays);
 
   return new Date(submitDate);
 }
