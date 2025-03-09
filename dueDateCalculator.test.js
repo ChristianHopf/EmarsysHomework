@@ -90,16 +90,22 @@ describe("isValidDate", () => {
 describe("moveByRemainingHours", () => {
   test("date moves forward within the same day", () => {
     // March 7, 2025 12:05:36
-    const result = moveByRemainingHours(1741367136000, 2);
+    const result = moveByRemainingHours(
+      Date.parse("March 7, 2025 12:05:36"),
+      2
+    );
 
-    expect(result).toBe(1741374336000);
+    expect(result).toBe(Date.parse("March 7, 2025 14:05:36"));
   });
 
   test("date moves forward to next day", () => {
     // March 10, 2025 12:05:36
-    const result = moveByRemainingHours(1741622736000, 7);
+    const result = moveByRemainingHours(
+      Date.parse("March 10, 2025 12:05:36"),
+      7
+    );
 
-    expect(result).toBe(1741705536000);
+    expect(result).toBe(Date.parse("March 11, 2025 11:05:36"));
   });
 
   test("date moves forward across the weekend", () => {
@@ -174,9 +180,9 @@ describe("calculateDueDate", () => {
 
   test("date correctly moves forward by remainder hours", () => {
     // March 10, 2025 15:05:36
-    const dueDate1 = calculateDueDate(1741633536000, 7);
+    const dueDate1 = calculateDueDate(Date.parse("March 10, 2025 15:05:36"), 7);
     // March 7, 2025 12:05:36
-    const dueDate2 = calculateDueDate(1741367136000, 7);
+    const dueDate2 = calculateDueDate(Date.parse("March 7, 2025 12:05:36"), 7);
 
     expect(dueDate1).toStrictEqual(new Date("March 11, 2025 14:05:36"));
     expect(dueDate2).toStrictEqual(new Date("March 10, 2025 12:05:36")); // DST
@@ -184,21 +190,21 @@ describe("calculateDueDate", () => {
 
   test("valid input returns correct same day due date", () => {
     // March 17, 2025 09:05:36
-    const dueDate = calculateDueDate(1742216736000, 7);
+    const dueDate = calculateDueDate(Date.parse("March 17, 2025 09:05:36"), 7);
 
     expect(dueDate).toStrictEqual(new Date("March 17, 2025, 16:05:36"));
   });
 
   test("valid input returns correct due date in the same week", () => {
     // March 17, 2025 09:05:36
-    const dueDate = calculateDueDate(1742216736000, 17);
+    const dueDate = calculateDueDate(Date.parse("March 17, 2025 09:05:36"), 17);
 
     expect(dueDate).toStrictEqual(new Date("March 19, 2025, 10:05:36"));
   });
 
   test("valid input returns correct due date, more than one week", () => {
     // March 17, 2025 09:05:36
-    const dueDate = calculateDueDate(1742216736000, 60);
+    const dueDate = calculateDueDate(Date.parse("March 17, 2025 09:05:36"), 60);
 
     expect(dueDate).toStrictEqual(new Date("March 26, 2025, 13:05:36"));
   });
