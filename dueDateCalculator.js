@@ -41,24 +41,9 @@ function isValidDate(date) {
   return 1 <= day && day <= 5;
 }
 
-function calculateDueDate(submitDate, turnaround) {
-  // Input validation, use a helper function
-  if (!isValidDate(submitDate) || turnaround <= 0) {
-    return null;
-  }
+function moveByRemainingHours(submitDate, remainingHours) {
+  let hour = new Date(submitDate).getHours();
 
-  let submitDateObj = new Date(submitDate);
-
-  // Perform due date calculation
-  // - Divide turnaround by 8 to get number of working days to add
-  // - Add remainder
-  let elapsedDays = Math.floor(turnaround / 8);
-  let remainingHours = turnaround % 8;
-
-  // Move date by remaining hours
-  let hour = submitDateObj.getHours();
-
-  // Pass 5 PM: move to next day 9 AM and add the extra hours
   if (hour + remainingHours > 17) {
     // Move to 5 PM
     submitDate += (17 - hour) * 3600000;
@@ -78,8 +63,25 @@ function calculateDueDate(submitDate, turnaround) {
     submitDate += remainingHours * 3600000;
   }
 
+  return submitDate;
+}
+
+function calculateDueDate(submitDate, turnaround) {
+  // Input validation, use a helper function
+  if (!isValidDate(submitDate) || turnaround <= 0) {
+    return null;
+  }
+
+  // Perform due date calculation
+  // - Divide turnaround by 8 to get number of working days to add
+  // - Add remainder
+  let elapsedDays = Math.floor(turnaround / 8);
+  let remainingHours = turnaround % 8;
+
+  // Move date by remaining hours
+  submitDate = moveByRemainingHours(submitDate, remainingHours);
+
   // Add elapsed weeks
-  //   let day = new Date(submitDate).getDay();
   while (elapsedDays >= 5) {
     // For every 5 days we want to add, add 7
     submitDate += 7 * 86400000;
