@@ -69,6 +69,8 @@ function moveByRemainingHours(submitDate, remainingHours) {
 }
 
 function moveByDays(submitDate, elapsedDays) {
+  let submitDateObj = new Date(submitDate);
+
   while (elapsedDays >= 5) {
     // For every 5 days we want to add, add 7
     submitDate += 7 * 86400000;
@@ -77,7 +79,13 @@ function moveByDays(submitDate, elapsedDays) {
 
   // Add remaining elapsed days
   if (elapsedDays > 0) {
-    submitDate += elapsedDays * 86400000;
+    // elapsedDays will be < 5, but we still need to check if we're crossing a weekend
+    let day = submitDateObj.getDay();
+    if (day + elapsedDays > 5) {
+      submitDate += (elapsedDays + 2) * 86400000;
+    } else {
+      submitDate += elapsedDays * 86400000;
+    }
   }
   return submitDate;
 }
