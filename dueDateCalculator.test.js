@@ -1,4 +1,9 @@
-const { isValidDate, calculateDueDate } = require("./dueDateCalculator");
+const {
+  isValidDate,
+  calculateDueDate,
+  moveByDays,
+  moveByRemainingHours,
+} = require("./dueDateCalculator");
 
 /**
  * isValidDate
@@ -73,6 +78,32 @@ describe("isValidDate", () => {
     expect(isValidWednesday).toBe(true);
     expect(isValidThursday).toBe(true);
     expect(isValidFriday).toBe(true);
+  });
+});
+
+describe("moveByRemainingHours", () => {
+  test("date moves forward within the same day", () => {
+    // March 7, 2025 12:05:36
+    const result = moveByRemainingHours(1741367136000, 2);
+
+    expect(result).toBe(1741374336000);
+  });
+
+  test("date moves forward to next day", () => {
+    // March 10, 2025 12:05:36
+    const result = moveByRemainingHours(1741622736000, 7);
+
+    expect(result).toBe(1741705536000);
+  });
+
+  test("date moves forward across the weekend", () => {
+    // March 14, 2025 12:05:36
+    const result = moveByRemainingHours(
+      Date.parse("March 14, 2025 12:05:36"),
+      7
+    );
+
+    expect(result).toBe(Date.parse("March 17, 2025 11:05:36"));
   });
 });
 

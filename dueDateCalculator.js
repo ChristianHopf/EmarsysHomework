@@ -103,4 +103,9 @@ function calculateDueDate(submitDate, turnaround) {
   return new Date(submitDate);
 }
 
-module.exports = { calculateDueDate, isValidDate };
+module.exports = {
+  isValidDate,
+  moveByRemainingHours,
+  moveByDays,
+  calculateDueDate,
+};
