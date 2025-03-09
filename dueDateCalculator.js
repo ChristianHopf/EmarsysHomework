@@ -90,26 +90,8 @@ function calculateDueDate(submitDate, turnaround) {
   if (elapsedDays > 0) {
     submitDate += elapsedDays * 86400000;
   }
+
   return new Date(submitDate);
-  //   if (day + elapsedDays > 5) {
-  //     // Move to Friday, skip the weekend, then the rest of elapsedDays
-  //     let moveToFriday = 5 - day;
-  //     submitDate += ((day + elapsedDays) % 5) * 86400000;
-  //     submitDate += 3 * 86400000;
-  //     submitDate += elapsedDays - (day + elapsedDays - 5);
-  //   }
-
-  //   return new Date(submitDate);
-
-  // Move date by remaining days
-
-  // Move date by elapsed days
-  //   let day = new Date(submitDate).getDay();
-  //   let dueDay = ((day - 1 + elapsedDays) % 5) + 1;
-
-  // Based on given time and turnaround, add another day if it passes 5 PM
-
-  // Return due date
 }
 
 module.exports = { calculateDueDate, isValidDate };
